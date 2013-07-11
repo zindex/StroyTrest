@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+    <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+
+    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript" src="js/path.js"></script>
+    <script type="text/javascript" src="js/initRaphael.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //init raphael
+            var r = Raphael('flat', 550, 380),
+                    animateSpeed = 250,
+                    fillColor = '#f89831';
+
+            drawMask(r, paths, '#868686', 11, fillColor, animateSpeed, '#000', '#fff', false, false);
+
+            //floor switch
+            $('.realty__pl-prog-link').click(function(e){
+                var floorID = $(this).attr('data-floor-id');
+
+                $('.realty__pl-prog-link').removeClass('realty__pl-prog-link-active');
+                $(this).addClass('realty__pl-prog-link-active');
+
+                $.ajax({
+                    //здесь должна быть ссылка, на скрипт, который будет возращать данные о этаже
+                    url: '', //например floor.php
+                    type: "GET",
+                    data: {id : floorID},
+                    dataType: "" // dataType должна иметь значение json, возращать данные нужно в таком же формате, как в файле path.js
+                }).done(function ( data ) {
+                            //тестовые данные, которые якобы пришли от сервера
+                            if (floorID == 2) { data = paths2}
+                            if (floorID == 3) { data = paths3}
+                            if (floorID == 1) { data = paths}
+                            //тестовые данные, которые якобы пришли от сервера end
+
+                            r.clear();
+                            drawMask(r, data, '#868686', 11, fillColor, animateSpeed, '#000', '#fff', false, false);
+                        });
+
+                e.preventDefault();
+            });
+
+            //popup structure select
+            $('#changePlan').click(function(e){
+                $('#structure').html('');
+                var t = setTimeout(function(){
+                    //init popup raphael
+                    var p = Raphael('structure', 373, 334);
+                    p.image("img/ph01_empty.png", 0, 0, 373, 334);
+
+                    drawMask(p, structures, '#868686', 1, fillColor, animateSpeed, '#fff','#fff', true, true);
+                },50);
+                e.preventDefault();
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+<div class="hdr">
+    <div class="case line">
+        <div class="case__inner">
+            <div class="logo">
+                <a href="Index.html"><img src="img/logo.png" alt=""></a>
+            </div>
+            <div class="hdr__tel">
+                331-2000
+            </div>
+            <div class="hdr__address">
+                Кондратьевский пр., д. 62, корп. 4
+            </div>
+            <div class="hdr__text">
+                Лидер кирпичного домостроения
+            </div>
+        </div>
+    </div>
+</div>
+<div class="menu">
+    <div class="case">
+        <div class="menu__inner">
+            <table class="menu__tabl">
+                <tr>
+                    <td>
+                        <a class="menu__link menu__link_fst" href="Index.html"><i class="ico ico_type_house"></i></a>
+                    </td>
+                    <td>
+                        <a class="menu__link menu__link-active" href="1.1.1-object-in-sale.html"><span class="menu__link-text">Недвижимость</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link" href="2.1-news.html"><span class="menu__link-text">Новости</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link" href="3.1-history.html"><span class="menu__link-text">Компания</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link" href="#"><span class="menu__link-text">Технологии</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link" href="5.5-contacts.html"><span class="menu__link-text">Служба сервиса</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link" href="6.1-parthners-1.html"><span class="menu__link-text">Партнеры</span></a>
+                    </td>
+                    <td>
+                        <a class="menu__link menu__link_last" href="7-contacts.html"><span class="menu__link-text">Контактная информация</span></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="description-head">
+    <div class="case line">
+        <div class="case__inner">
+            <a class="description-head__link" href="1.1.1-object-in-sale.html"><i class="ico ico_type_beam"></i>К другим объектам</a>
+            <div class="description-head__cnt">
+                <h1>Золотая середина</h1>
+                <div class="description-head__add">Выборгский район, <i class="ico ico_type_undergroud"></i>Пионерская, Железнодорожный пер., д. 12, лит. А</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="slider__main">
+    <div class="case">
+        <div class="slider__inside">
+            <div id="slider" class="slider__main-img">
+                <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+            </div>
+        </div>
+        <div class="slider__main-panel line">
+            <div id="slider_dot" class="slider__main-btn" >
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cnt">
+    <div class="case line">
+        <div class="case__inner">
+            <div class="main line">
+                <div class="sidebar sidebar__left">
+                    <ul class="sidebar__list">
+                        <li><a class="sb__link" href="1.1.1.1.1-description.html">Описание</a></li>
+                        <li><a class="sb__link sb__link-active" href="1.1.1.1.2-plans-1.html">Планировки</a></li>
+                        <li><a class="sb__link" href="1.1.1.1.3-infrastructure.html">Инфраструктура</a></li>
+                        <li><a class="sb__link" href="#">История района</a></li>
+                        <li><a class="sb__link" href="1.1.1.1.5-hod-stroit.html">Ход строительства</a></li>
+                        <li><a class="sb__link" href="#">Паркинги</a></li>
+                        <li><a class="sb__link" href="#">Технологии и материалы</a></li>
+                        <li><a class="sb__link" href="#">Архитектура и дизайн</a></li>
+                    </ul>
+                    <div class="sidebar__download">
+                        <a class="maplook" href="#popupmap">
+                            <img src="img/map-small.jpg" alt="">
+                                    <span class="sidebar__download-block">
+                                        <span class="sidebar__download-text">Дом на карте</span>
+                                    </span>
+                        </a>
+                    </div>
+                    <div class="sidebar__download">
+                        <a class="download-project" href="#popupdoc">
+                            <img src="img/doc-down.jpg" alt="">
+                                    <span class="sidebar__download-block">
+                                        <span class="sidebar__download-text">Скачать проектную</span>
+                                        <span class="sidebar__download-text">декларацию</span>
+                                    </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="realty realty__right">
+                    <div class="realty__list realty__list-description">
+                        <div class="realty__pl line">
+                            <h2>Планировки</h2>
+                            <span class="realty__pl-name">Корпус А</span>
+                            <a id="changePlan" class="realty__pl-link" href="#">Выбрать другой корпус</a>
+                            <div class="realty__pl-block line">
+                                <div class="realty__pl-floors">
+                                    <p>Этажи</p>
+                                    <div class="realty__pl-floors-block">
+                                        <div>
+                                            <a class="realty__pl-prog-link" href="#" data-floor-id="3">
+                                                <span class="realty__pl-prog-link-txt">13</span><span class="ico ico_type_corner"></span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="realty__pl-prog-link" href="#" data-floor-id="2">
+                                                <span class="realty__pl-prog-link-txt">12</span><span class="ico ico_type_corner" data-floor-id="3"></span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="realty__pl-prog-link" href="#" data-floor-id="2">
+                                                <span class="realty__pl-prog-link-txt">4-10</span><span class="ico ico_type_corner"></span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="realty__pl-prog-link" href="#" data-floor-id="3">
+                                                <span class="realty__pl-prog-link-txt">3</span><span class="ico ico_type_corner"></span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a class="realty__pl-prog-link realty__pl-prog-link-active" href="#" data-floor-id="1">
+                                                <span class="realty__pl-prog-link-txt">2</span><span class="ico ico_type_corner"></span>
+                                            </a>
+                                        </div>
+                                    </div><!-- end .realty__pl-floors-block-->
+                                </div>
+                                <div class="realty__pl-section">
+                                    <div id="flat" class="realty-pl-plan"></div>
+                                </div>
+
+                                <div class="popup__plan" style="display:none">
+                                    <div class="popup-box popup-box_plan">
+                                        <div class="popup-box__main-plan">
+                                            <h3>Выберите корпус</h3>
+                                            <div id="structure" class="realty__pl-map">
+
+                                            </div>
+                                        </div>
+                                        <a class="ico ico_type_close-dark" href="#"></a>
+                                    </div>
+                                    <div class="popup-box__shadow">
+                                    </div>
+                                </div><!-- end .popup__plan-->
+                            </div>
+
+                            <div id="flat-desc" class="realty-pl-flat" style="display:none;">
+
+                            </div>
+
+                            <!-- flat-desc template
+                            <div class="realty-pl-flat">
+                                <span class="realty__pl-name">3-комнатная квартира,</span>
+                                <p class="realty__pl-param realty__pl-param_fst">Тип <span class="realty__pl-data">1-1</span></p>
+                                <p class="realty__pl-param realty__pl-param_fst">Этаж <span class="realty__pl-data">2</span></p>
+                                <p class="realty__pl-param">Количество комнат <span class="realty__pl-data">3</span></p>
+                                <p class="realty__pl-param">Общая площадь <span class="realty__pl-data">80,83 м<sup>2</sup></span></p>
+                                <p class="realty__pl-param">Жилая площадь <span class="realty__pl-data">47,20 м<sup>2</sup></span></p>
+
+                                <div class="realty__pl-view">
+                                    <img src="img/plan03.jpg" alt="">
+                                </div>
+
+
+                                <div class="realty__pl-form realty__pl-form_tabl">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td class="realty__pl-form_tabl-itm">
+                                                <a class="realty__pl-form-link" href="1.1.1.1.2-plans-5.html"><span class="ico ico_type_type"></span>Распечатать страницу</a> или отправьте на
+                                            </td>
+                                            <td>
+                                                <div class="b-input-i">
+                                                    <input class="b-input" type="text" placeholder="электронную почту">
+                                                </div>
+                                            </td>
+                                            <td class="realty__pl-form_tabl-itm_lst">
+                                                <a class="btn btn_disable" href="#">Отправить</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            -->
+
+                        </div><!-- end .realty__pl-->
+                    </div><!-- end .realty__list realty__list-description-->
+                </div><!-- end .realty realty__right -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="ftr">
+    <div class="case">
+        <div class="case__inner">
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="ftr__block ftr__block_first">
+                            <span class="ftr__block-text">© 1992–2012 Строительный трест</span>
+                            <a href="#">Договоры и лицензии</a>
+                            <p class="ftr__block-add">Санкт-Петербург, <br/>Кондратьевский пр. 62, корп. 4. <br/>(812) 331-2000</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ftr__block">
+                            <p class="ftr__block-top">Строительный трест является членом <br/>СРО НП «Объединение строителей»</p>
+                            <div class="ftr__block-pic">
+                                <img src="img/ftr01.png" alt="">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ftr__block">
+                            <p class="ftr__block-top ftr__block-top_thd">Строительный трест является участником социальных программ</p>
+                            <div class="ftr__block-pic">
+                                <img src="img/ftr02.png" alt="">
+                                <img  class="ftr__block-pic-bottom" src="img/ftr03.png" alt="">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ftr__studio">
+                            <i class="ico ico_type_studio"></i><div class="ftr__studio-name"><a href="#">Создание сайта</a> —<br/> ИА Кельник</div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="popup" style="display:none;">
+    <div class="popup__data">
+        <div  class="popup-box">
+            <div id="popup-box" class="popup-box__main">
+                <a class="popup-click" href="#"><img src="img/popup-pic.png" alt=""></a>
+                <div class="popup-box-text">
+                    <p>Ипотечный кредит предоставляется ЗАО «Банк ВТБ24» (генеральная лицензия Банка России № 1623 от 13.07.2000 г.) по программе «Ипотека
+                        с государственной поддержкой».</p>
+                    <p>Данная программа предусматривает приобретение квартир
+                        на инвестиционном периоде в кредит со ставкой 11,5% годовых, а после оформления права собственности – 11% годовых.</p>
+                    <p>Первоначальный взнос — от 20%. Срок кредита — до 30 лет. Сумма кредита — от 300 000 до 8 000 000 рублей (для Санкт-Петербурга и Ленинградской области).</p>
+                </div>
+
+            </div>
+            <a class="ico ico_type_close" href="#"></a>
+        </div>
+    </div>
+
+    <div class="popup__bg"></div>
+</div>
+
+<div class="popup popup_map" style="display:none;">
+    <div class="popup__data popup__data_map">
+        <div id="popupmap" class="popup-box popup-box_map">
+            <section class="b-map">
+                <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (начало) -->
+                <div id="ymaps-map-id_1361787748897998812309" style="width: 100%; height: 696px;"></div>
+                <script>
+                    function fid_1361787748897998812309(ymaps) {
+                        var map = new ymaps.Map("ymaps-map-id_1361787748897998812309", {
+                            center: [30.399375,59.976855],
+                            zoom: 13,
+                            type: "yandex#map"
+                        });
+                        map.controls
+                                .add("zoomControl")
+                                .add("mapTools")
+                                .add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));
+
+                        var myPlacemark1 =new ymaps.Placemark([30.399375,59.976855], {
+                            balloonContent: "196066, Россия, Санкт-Петербург,<br/>пр. Маршала Блюхера"
+                        }, {
+                            iconImageHref: 'http://z-index.com.ua/Content/img/map-icon.png', // картинка иконки
+                            iconImageSize: [43, 42], // размеры картинки
+                            iconImageOffset: [-16, -36] // смещение картинки
+
+                        });
+
+                        //adding placemarks to our map
+                        map.geoObjects.add(myPlacemark1);
+
+                        var arr = [myPlacemark1];
+
+                        $(function(){
+                            $.each(arr,function(k,v){
+                                var mark = arr[k];
+
+                                mark.events.add('mouseenter', function (e) {
+                                    e.get('target').options.set('iconImageHref', 'http://z-index.com.ua/Content/img/map-hover.png');
+                                });
+                                mark.events.add('mouseleave', function (e) {
+                                    e.get('target').options.set('iconImageHref', 'http://z-index.com.ua/Content/img/map-icon.png');
+                                });
+                                mark.events.add('click', function (e) {
+                                    map.setCenter(mark.geometry.getCoordinates(), 15, map);
+                                });
+                            });
+                        });
+
+                    };
+                </script>
+                <script src="http://api-maps.yandex.ru/2.0-stable/?lang=ru-RU&coordorder=longlat&load=package.full&wizard=constructor&onload=fid_1361787748897998812309"></script>
+                <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (конец) -->
+            </section>
+        </div>
+        <a class="ico ico_type_close" href="#"></a>
+    </div>
+    <div class="popup__bg"></div>
+</div>
+
+<div class="popup" style="display:none;">
+    <div class="popup__data popup__data-doc">
+        <div id="popupdoc" class="popup-box">
+            <div class="popup-box__main popup-box__main_doc">
+                <h2>Скачать проектную документацию</h2>
+                <div class="realty__doc">
+                    <a class="b-link" href="#"><img src="img/pdf.png" alt=""></a>
+                    <a class="b-link b-link_text" href="#">Проектная декларация<span class="realty__list-comment">5 Мб</span></a>
+                </div>
+                <div class="realty__doc">
+                    <a class="b-link" href="#"><img src="img/doc.png" alt=""></a>
+                    <a class="b-link b-link_text" href="#">Изменение к проектной декларации<span class="realty__list-comment">2 Мб</span></a>
+                </div>
+                <div class="realty__doc">
+                    <a class="b-link" href="#"><img src="img/doc.png" alt=""></a>
+                    <a class="b-link b-link_text" href="#">Скачать изменение в проектную декларацию от 29.07.11<span class="realty__list-comment">2 Мб</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

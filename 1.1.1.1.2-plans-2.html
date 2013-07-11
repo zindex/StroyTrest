@@ -1,0 +1,671 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+    <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+
+    <script type="text/javascript" src="js/raphael-min.js"></script>
+    <script type="text/javascript">
+    var paths = {
+        flat1: {
+            name: 'flat1',
+            fill: '#feee44', //yellow
+            fillOpacity: 0.9,
+            link: '#',
+            text: '1',
+            textPos: [113,44],
+            path: 'M92.208,6.453L163.784 33.811 149.819 69.658 129.684 61.8 123.325 78.287 112.651 74.232 108.91 83.9 98.169 79.772 99.059 77.443 69.343 66.032 z'
+        },
+        flat2: {
+            name: 'flat2',
+            fill: '#b7d0ec', //blue
+
+            path: 'M114.59,100.383L159.223 117.177 173.817 78.901 129.684 61.8 z'
+        },
+        flat3: {
+            name: 'flat3',
+            fill: '#d6e5f1', //light blue
+            path: 'M114.59,100.383L159.223 117.177 145.081 155.019 99.944 137.426 z'
+        },
+        flat4: {
+            name: 'flat4',
+            fill: '#ffffff',
+            path: 'M49.724,118.572L99.944 137.426 123.325 78.287 112.651 74.232 108.91 83.9 98.169 79.772 99.059 77.443 69.343 66.032 z'
+        },
+        flat5: {
+            name: 'flat5',
+            fill: '#f6c6dc', // pink
+            path: 'M49.724,118.572L99.944 137.426 135.053 151.144 122.44 183.965 112.518 184.866 35.202 154.986 z'
+        },
+        flat6: {
+            name: 'flat6',
+            fill: '#feee44',
+            path: 'M19.216,196.36L51.974 208.95 52.031 214.801 81.164 214.801 81.164 238.174 112.5 238.039 112.518 184.866 35.202 154.986 z'
+        },
+        flat7: {
+            name: 'flat7',
+            fill: '#b7d0ec',
+            path: 'M19.216,196.36L51.974 208.95 52.031 214.801 69.715 214.801 69.715 245.719 5 245.719 5 229.855 12.373 229.913 12.373 220.969 19.358 221.042 z'
+        },
+        flat8: {
+            name: 'flat8',
+            fill: '#d6e5f1',
+            path: 'M19.287,286.624L51.974 286.624 52.031 278.893 69.715 278.893 69.715 245.719 5 245.719 5 259.37 12.373 259.428 12.373 268.558 19.287 268.558 z'
+        },
+        flat9: {
+            name: 'flat9',
+            fill: '#feee44',
+            path: 'M19.287,286.624L51.974 286.624 52.031 278.893 69.715 278.893 69.715 298.033 89.625 298.033 89.625 348.749 12.373 348.837 12.373 317.731 19.287 317.731 z'
+        },
+        flat10: {
+            name: 'flat10',
+            fill: '#fbe6f0',
+            path: 'M252.463,293.509L212.065 293.509 212.061 287.85 185.665 287.85 185.665 238.039 252.463 238.039 z'
+        },
+        flat11: {
+            name: 'flat11',
+            fill: '#f6c6dc',
+            path: 'M252.463,293.509L300.67 293.509 300.67 287.85 319.952 287.85 319.952 238.039 252.463 238.039 z'
+        },
+        flat12: {
+            name: 'flat12',
+            fill: '#f6c6dc',
+            path: 'M252.463,293.509L212.065 293.509 212.061 298.033 185.665 298.033 185.665 348.904 252.463 348.904 z'
+        },
+        flat12a: {
+            name: 'flat12a',
+            fill: '#fbe6f0',
+            path: 'M252.463,293.509L300.67 293.509 300.67 298.033 315.827 298.033 315.827 348.904 252.463 348.904 z'
+        },
+        flat13: {
+            name: 'flat13',
+            fill: '#fbe6f0',
+            path: 'M371.875,238.039L319.952 238.039 319.952 287.85 372.985 287.85 372.985 280.352 393.928 280.352 393.928 252.463 371.875 252.463 z'
+        },
+        flat14: {
+            name: 'flat14',
+            fill: '#b7d0ec',
+            path: 'M412.525,268.284L452.752 268.284 452.752 295.678 372.985 295.678 372.985 280.352 393.928 280.352 393.928 252.463 412.525 252.463 z'
+        },
+        flat15: {
+            name: 'flat15',
+            fill: '#feee44',
+            path: 'M414.395,348.904L414.395 296.03 452.752 296.03 452.752 284.235 490.764 284.235 490.764 292.631 515.223 301.842 497.073 348.749 z'
+        },
+        flat16: {
+            name: 'flat16',
+            fill: '#ffffff',
+            path: 'M69.715,214.801L81.164 214.801 81.164 238.174 112.5 238.174 112.5 287.85 212.061 287.85 212.061 298.033 185.665 298.033 185.665 348.904 131.797 348.904 131.797 298.033 69.715 298.033 z'
+        },
+        flat17: {
+            name: 'flat17',
+            fill: '#ffffff',
+            path: 'M300.67,287.85L300.67 298.033 357.794 298.033 357.794 348.749 414.395 348.749 414.395 296.03 372.985 296.03 372.985 287.85 z'
+        },
+        flat18: {
+            name: 'flat18',
+            fill: '#b7d0ec',
+            path: 'm 89.625,298.03299 42.172,0 0,50.716 -42.172,0 z'
+        },
+        flat19: {
+            name: 'flat19',
+            fill: '#f6c6dc', // pink
+            path: 'm 112.5,238.039 73.165,0 0,49.812 -73.165,0 z'
+        },
+        flat20: {
+            name: 'flat19',
+            fill: '#b7d0ec', //blue
+            path: 'm 315.827,298.03299 41.96699,0 0,50.716 -41.96699,0 z'
+        }
+    };
+
+    var paths2 = {
+        flat1: {
+            name: 'flat1',
+            fill: '#feee44', //yellow
+            fillOpacity: 0.9,
+            link: '#',
+            text: '1',
+            textPos: [113,44],
+            path: 'M92.208,6.453L163.784 33.811 149.819 69.658 129.684 61.8 123.325 78.287 112.651 74.232 108.91 83.9 98.169 79.772 99.059 77.443 69.343 66.032 z'
+        },
+        flat2: {
+            name: 'flat2',
+            fill: '#b7d0ec', //blue
+            path: 'M114.59,100.383L159.223 117.177 173.817 78.901 129.684 61.8 z'
+        },
+        flat3: {
+            name: 'flat3',
+            fill: '#d6e5f1', //light blue
+            path: 'M114.59,100.383L159.223 117.177 145.081 155.019 99.944 137.426 z'
+        },
+        flat4: {
+            name: 'flat4',
+            fill: '#ffffff',
+            path: 'M49.724,118.572L99.944 137.426 123.325 78.287 112.651 74.232 108.91 83.9 98.169 79.772 99.059 77.443 69.343 66.032 z'
+        },
+        flat5: {
+            name: 'flat5',
+            fill: '#f6c6dc', // pink
+            path: 'M49.724,118.572L99.944 137.426 135.053 151.144 122.44 183.965 112.518 184.866 35.202 154.986 z'
+        },
+        flat6: {
+            name: 'flat6',
+            fill: '#feee44',
+            path: 'M19.216,196.36L51.974 208.95 52.031 214.801 81.164 214.801 81.164 238.174 112.5 238.039 112.518 184.866 35.202 154.986 z'
+        },
+        flat7: {
+            name: 'flat7',
+            fill: '#b7d0ec',
+            path: 'M19.216,196.36L51.974 208.95 52.031 214.801 69.715 214.801 69.715 245.719 5 245.719 5 229.855 12.373 229.913 12.373 220.969 19.358 221.042 z'
+        },
+        flat8: {
+            name: 'flat8',
+            fill: '#d6e5f1',
+            path: 'M19.287,286.624L51.974 286.624 52.031 278.893 69.715 278.893 69.715 245.719 5 245.719 5 259.37 12.373 259.428 12.373 268.558 19.287 268.558 z'
+        }
+    };
+
+    var paths3 = {
+        flat11: {
+            name: 'flat11',
+            fill: '#f6c6dc',
+            path: 'M252.463,293.509L300.67 293.509 300.67 287.85 319.952 287.85 319.952 238.039 252.463 238.039 z'
+        },
+        flat12: {
+            name: 'flat12',
+            fill: '#f6c6dc',
+            path: 'M252.463,293.509L212.065 293.509 212.061 298.033 185.665 298.033 185.665 348.904 252.463 348.904 z'
+        },
+        flat12a: {
+            name: 'flat12a',
+            fill: '#fbe6f0',
+            path: 'M252.463,293.509L300.67 293.509 300.67 298.033 315.827 298.033 315.827 348.904 252.463 348.904 z'
+        },
+        flat13: {
+            name: 'flat13',
+            fill: '#fbe6f0',
+            path: 'M371.875,238.039L319.952 238.039 319.952 287.85 372.985 287.85 372.985 280.352 393.928 280.352 393.928 252.463 371.875 252.463 z'
+        },
+        flat14: {
+            name: 'flat14',
+            fill: '#b7d0ec',
+            path: 'M412.525,268.284L452.752 268.284 452.752 295.678 372.985 295.678 372.985 280.352 393.928 280.352 393.928 252.463 412.525 252.463 z'
+        },
+        flat15: {
+            name: 'flat15',
+            fill: '#feee44',
+            path: 'M414.395,348.904L414.395 296.03 452.752 296.03 452.752 284.235 490.764 284.235 490.764 292.631 515.223 301.842 497.073 348.749 z'
+        },
+        flat16: {
+            name: 'flat16',
+            fill: '#ffffff',
+            path: 'M69.715,214.801L81.164 214.801 81.164 238.174 112.5 238.174 112.5 287.85 212.061 287.85 212.061 298.033 185.665 298.033 185.665 348.904 131.797 348.904 131.797 298.033 69.715 298.033 z'
+        },
+        flat17: {
+            name: 'flat17',
+            fill: '#ffffff',
+            path: 'M300.67,287.85L300.67 298.033 357.794 298.033 357.794 348.749 414.395 348.749 414.395 296.03 372.985 296.03 372.985 287.85 z'
+        },
+        flat18: {
+            name: 'flat18',
+            fill: '#b7d0ec',
+            path: 'm 89.625,298.03299 42.172,0 0,50.716 -42.172,0 z'
+        },
+        flat19: {
+            name: 'flat19',
+            fill: '#f6c6dc', // pink
+            path: 'm 112.5,238.039 73.165,0 0,49.812 -73.165,0 z'
+        },
+        flat20: {
+            name: 'flat19',
+            fill: '#b7d0ec', //blue
+            path: 'm 315.827,298.03299 41.96699,0 0,50.716 -41.96699,0 z'
+        }
+    };
+
+    var structures = {
+        structure1: {
+            name: 'structure1',
+            fill: '#DAE0F1',
+            fillOpacity: 0.9,
+            link: '1.1.1.1.2-plans-2.html',
+            text: 'A',
+            textPos: [117,192],
+            path: 'M140.545,230.045l1.773-1.065l-4.41-7.242l3.042-1.825l-4.667-7.666  l3.016-1.812l-4.714-7.748l2.751-1.648l-30.097-49.436l9.084-5.447l1.211,1.639l7.487-1.313l0.419,2.362l9.521-1.756l9.612-1.709  l-1.009-5.631l8.451-1.44l-3.322-18.047l-14.018,2.46l-0.001-0.006l-0.647,0.119l-0.627,0.112v0.006l-11.662,2.156l-7.991,1.297  l-0.001-0.008l-0.636,0.111l-0.643,0.103l0.001,0.006l-8.472,1.469l-0.053-0.297l-0.705,0.427l-0.521,0.091l0.039,0.203  l-3.754,2.283l-0.793-1.336l-1.708,1.025l-0.845-1.414l-6.74,4.045l0.844,1.411l-1.746,1.046l0.802,1.318l-8.272,4.965l-0.802-1.318  l-7.043,4.224l9.368,15.349l4.507,7.4l-0.033,0.019l22.031,36.182l0.03-0.017l10.761,17.675l-0.031,0.021l10.195,16.671  l12.136-2.096L140.545,230.045z'
+        },
+        structure2: {
+            name: 'structure2',
+            fill: '#DAE0F1',
+            fillOpacity: 0.9,
+            link: '1.1.1.1.2-plans-3.html',
+            text: 'B',
+            textPos: [195,219],
+            path: 'm 149.85406,245.78402 c 122.1452,-25.44691 121.57972,-26.57789 122.1452,-25.44691 0.56549,1.13097 -59.37613,-18.66108 -59.37613,-18.66108 l -48.63189,11.30974 -20.35753,30.5363 z'
+        }
+    };
+    </script>
+    <script type="text/javascript" src="js/initRaphael.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //init raphael
+            var r = Raphael('flat', 550, 380),
+                    animateSpeed = 250,
+                    fillColor = '#f89831';
+            r.image("img/plans-1-bg.png", 0, 0, 523, 355); // x, ,y, with, height
+            drawMask(r, paths, '#868686', 11, fillColor, animateSpeed, '#000', '#fff', false, false);
+
+            //floor switch
+            $('.realty__pl-prog-link').click(function(e){
+                var floorID = $(this).attr('data-floor-id');
+
+                $('.realty__pl-prog-link').removeClass('realty__pl-prog-link-active');
+                $(this).addClass('realty__pl-prog-link-active');
+
+                $.ajax({
+                    //здесь должна быть ссылка, на скрипт, который будет возращать данные о этаже
+                    url: '', //например floor.php
+                    type: "GET",
+                    data: {id : floorID},
+                    dataType: "" // dataType должна иметь значение json, возращать данные нужно в таком же формате, как в файле path.js
+                }).done(function ( data ) {
+                            //тестовые данные, которые якобы пришли от сервера
+                            if (floorID == 2) { data = paths2}
+                            if (floorID == 3) { data = paths3}
+                            if (floorID == 1) { data = paths}
+                            //тестовые данные, которые якобы пришли от сервера end
+
+                            r.clear();
+                            r.image("img/plans-1-bg.png", 0, 0, 523, 355); // x, ,y, with, height
+                            drawMask(r, data, '#868686', 11, fillColor, animateSpeed, '#000', '#fff', false, false);
+                        });
+
+                e.preventDefault();
+            });
+
+            //popup structure select
+            $('#changePlan').click(function(e){
+                $('#structure').html('');
+                var t = setTimeout(function(){
+                    //init popup raphael
+                    var p = Raphael('structure', 373, 334);
+                    p.image("img/ph01_empty.png", 0, 0, 373, 334);
+
+                    drawMask(p, structures, '#868686', 1, fillColor, animateSpeed, '#fff','#fff', true, true);
+                },50);
+                e.preventDefault();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="hdr">
+            <div class="case line">
+                <div class="case__inner">
+                    <div class="logo">
+                        <a href="Index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                    <div class="hdr__tel">
+                        331-2000
+                    </div>
+                    <div class="hdr__address">
+                        Кондратьевский пр., д. 62, корп. 4
+                    </div>
+                    <div class="hdr__text">
+                        Лидер кирпичного домостроения
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="case">
+                <div class="menu__inner">
+                    <table class="menu__tabl">
+                        <tr>
+                            <td>
+                                <a class="menu__link menu__link_fst" href="Index.html"><i class="ico ico_type_house"></i></a>
+                            </td>
+                            <td>
+                                <a class="menu__link menu__link-active" href="1.1.1-object-in-sale.html"><span class="menu__link-text">Недвижимость</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link" href="2.1-news.html"><span class="menu__link-text">Новости</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link" href="3.1-history.html"><span class="menu__link-text">Компания</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link" href="#"><span class="menu__link-text">Технологии</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link" href="5.5-contacts.html"><span class="menu__link-text">Служба сервиса</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link" href="6.1-parthners-1.html"><span class="menu__link-text">Партнеры</span></a>
+                            </td>
+                            <td>
+                                <a class="menu__link menu__link_last" href="7-contacts.html"><span class="menu__link-text">Контактная информация</span></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="description-head">
+            <div class="case line">
+                <div class="case__inner">
+                    <a class="description-head__link" href="1.1.1-object-in-sale.html"><i class="ico ico_type_beam"></i>К другим объектам</a>
+                    <div class="description-head__cnt">
+                        <h1>Золотая середина</h1>
+                        <div class="description-head__add">Выборгский район, <i class="ico ico_type_undergroud"></i>Пионерская, Железнодорожный пер., д. 12, лит. А</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider__main">
+            <div class="case">
+                <div class="slider__inside">
+                    <div id="slider" class="slider__main-img">
+                        <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                        <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                        <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                        <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                        <a href="#popup-box" class="js-show-popup"><img src="img/sl02.jpg" height="346" width="1000"></a>
+                    </div>
+                </div>
+                <div class="slider__main-panel line">
+                    <div id="slider_dot" class="slider__main-btn" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cnt">
+            <div class="case line">
+                <div class="case__inner">
+                    <div class="main line">
+                        <div class="sidebar sidebar__left">
+                            <ul class="sidebar__list">
+                                <li><a class="sb__link" href="1.1.1.1.1-description.html">Описание</a></li>
+                                <li><a class="sb__link sb__link-active" href="1.1.1.1.2-plans-1.html">Планировки</a></li>
+                                <li><a class="sb__link" href="1.1.1.1.3-infrastructure.html">Инфраструктура</a></li>
+                                <li><a class="sb__link" href="#">История района</a></li>
+                                <li><a class="sb__link" href="1.1.1.1.5-hod-stroit.html">Ход строительства</a></li>
+                                <li><a class="sb__link" href="#">Паркинги</a></li>
+                                <li><a class="sb__link" href="#">Технологии и материалы</a></li>
+                                <li><a class="sb__link" href="#">Архитектура и дизайн</a></li>
+                            </ul>
+                            <div class="sidebar__download">
+                                <a class="maplook" href="#popupmap">
+                                    <img src="img/map-small.jpg" alt="">
+                                    <span class="sidebar__download-block">
+                                        <span class="sidebar__download-text">Дом на карте</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <div class="sidebar__download">
+                                <a class="download-project" href="#popupdoc">
+                                    <img src="img/doc-down.jpg" alt="">
+                                    <span class="sidebar__download-block">
+                                        <span class="sidebar__download-text">Скачать проектную</span>
+                                        <span class="sidebar__download-text">декларацию</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="realty realty__right">
+                            <div class="realty__list realty__list-description">
+                                <div class="realty__pl line">
+                                    <h2>Планировки</h2>
+                                    <span class="realty__pl-name">Корпус А</span>
+                                    <a id="changePlan" class="realty__pl-link" href="#">Выбрать другой корпус</a>
+                                    <div class="realty__pl-block line">
+                                        <div class="realty__pl-floors">
+                                            <p>Этажи</p>
+                                            <div class="realty__pl-floors-block">
+                                                <div>
+                                                    <a class="realty__pl-prog-link" href="#" data-floor-id="3">
+                                                        <span class="realty__pl-prog-link-txt">13</span><span class="ico ico_type_corner"></span>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a class="realty__pl-prog-link" href="#" data-floor-id="2">
+                                                        <span class="realty__pl-prog-link-txt">12</span><span class="ico ico_type_corner" data-floor-id="3"></span>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a class="realty__pl-prog-link" href="#" data-floor-id="2">
+                                                        <span class="realty__pl-prog-link-txt">4-10</span><span class="ico ico_type_corner"></span>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a class="realty__pl-prog-link" href="#" data-floor-id="3">
+                                                        <span class="realty__pl-prog-link-txt">3</span><span class="ico ico_type_corner"></span>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a class="realty__pl-prog-link realty__pl-prog-link-active" href="#" data-floor-id="1">
+                                                        <span class="realty__pl-prog-link-txt">2</span><span class="ico ico_type_corner"></span>
+                                                    </a>
+                                                </div>
+                                            </div><!-- end .realty__pl-floors-block-->
+                                        </div>
+                                        <div class="realty__pl-section">
+                                            <div id="flat" class="realty-pl-plan"></div>
+                                        </div>
+
+                                        <div class="popup__plan" style="display:none">
+                                            <div class="popup-box popup-box_plan">
+                                                <div class="popup-box__main-plan">
+                                                    <h3>Выберите корпус</h3>
+                                                    <div id="structure" class="realty__pl-map">
+
+                                                    </div>
+                                                </div>
+                                                <a class="ico ico_type_close-dark" href="#"></a>
+                                            </div>
+                                            <div class="popup-box__shadow">
+                                            </div>
+                                        </div><!-- end .popup__plan-->
+                                    </div>
+
+                                    <div id="flat-desc" class="realty-pl-flat" style="display:none;">
+
+                                    </div>
+
+                                    <!-- flat-desc template
+                                    <div class="realty-pl-flat">
+                                        <span class="realty__pl-name">3-комнатная квартира,</span>
+                                        <p class="realty__pl-param realty__pl-param_fst">Тип <span class="realty__pl-data">1-1</span></p>
+                                        <p class="realty__pl-param realty__pl-param_fst">Этаж <span class="realty__pl-data">2</span></p>
+                                        <p class="realty__pl-param">Количество комнат <span class="realty__pl-data">3</span></p>
+                                        <p class="realty__pl-param">Общая площадь <span class="realty__pl-data">80,83 м<sup>2</sup></span></p>
+                                        <p class="realty__pl-param">Жилая площадь <span class="realty__pl-data">47,20 м<sup>2</sup></span></p>
+
+                                        <div class="realty__pl-view">
+                                            <img src="img/plan03.jpg" alt="">
+                                        </div>
+
+
+                                        <div class="realty__pl-form realty__pl-form_tabl">
+                                            <table>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="realty__pl-form_tabl-itm">
+                                                        <a class="realty__pl-form-link" href="1.1.1.1.2-plans-5.html"><span class="ico ico_type_type"></span>Распечатать страницу</a> или отправьте на
+                                                    </td>
+                                                    <td>
+                                                        <div class="b-input-i">
+                                                            <input class="b-input" type="text" placeholder="электронную почту">
+                                                        </div>
+                                                    </td>
+                                                    <td class="realty__pl-form_tabl-itm_lst">
+                                                        <a class="btn btn_disable" href="#">Отправить</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    -->
+
+                                </div><!-- end .realty__pl-->
+                            </div><!-- end .realty__list realty__list-description-->
+                        </div><!-- end .realty realty__right -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ftr">
+        <div class="case">
+            <div class="case__inner">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="ftr__block ftr__block_first">
+                                <span class="ftr__block-text">© 1992–2012 Строительный трест</span>
+                                <a href="#">Договоры и лицензии</a>
+                                <p class="ftr__block-add">Санкт-Петербург, <br/>Кондратьевский пр. 62, корп. 4. <br/>(812) 331-2000</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ftr__block">
+                                <p class="ftr__block-top">Строительный трест является членом <br/>СРО НП «Объединение строителей»</p>
+                                <div class="ftr__block-pic">
+                                    <img src="img/ftr01.png" alt="">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ftr__block">
+                                <p class="ftr__block-top ftr__block-top_thd">Строительный трест является участником социальных программ</p>
+                                <div class="ftr__block-pic">
+                                    <img src="img/ftr02.png" alt="">
+                                    <img  class="ftr__block-pic-bottom" src="img/ftr03.png" alt="">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ftr__studio">
+                                <i class="ico ico_type_studio"></i><div class="ftr__studio-name"><a href="#">Создание сайта</a> —<br/> ИА Кельник</div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="popup" style="display:none;">
+        <div class="popup__data">
+            <div  class="popup-box">
+                <div id="popup-box" class="popup-box__main">
+                    <a class="popup-click" href="#"><img src="img/popup-pic.png" alt=""></a>
+                    <div class="popup-box-text">
+                        <p>Ипотечный кредит предоставляется ЗАО «Банк ВТБ24» (генеральная лицензия Банка России № 1623 от 13.07.2000 г.) по программе «Ипотека
+                            с государственной поддержкой».</p>
+                        <p>Данная программа предусматривает приобретение квартир
+                            на инвестиционном периоде в кредит со ставкой 11,5% годовых, а после оформления права собственности – 11% годовых.</p>
+                        <p>Первоначальный взнос — от 20%. Срок кредита — до 30 лет. Сумма кредита — от 300 000 до 8 000 000 рублей (для Санкт-Петербурга и Ленинградской области).</p>
+                    </div>
+
+                </div>
+                <a class="ico ico_type_close" href="#"></a>
+            </div>
+        </div>
+
+        <div class="popup__bg"></div>
+    </div>
+
+    <div class="popup popup_map" style="display:none;">
+        <div class="popup__data popup__data_map">
+            <div id="popupmap" class="popup-box popup-box_map">
+                <section class="b-map">
+                    <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (начало) -->
+                    <div id="ymaps-map-id_1361787748897998812309" style="width: 100%; height: 696px;"></div>
+                    <script>
+                        function fid_1361787748897998812309(ymaps) {
+                            var map = new ymaps.Map("ymaps-map-id_1361787748897998812309", {
+                                center: [30.399375,59.976855],
+                                zoom: 13,
+                                type: "yandex#map"
+                            });
+                            map.controls
+                                    .add("zoomControl")
+                                    .add("mapTools")
+                                    .add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));
+
+                            var myPlacemark1 =new ymaps.Placemark([30.399375,59.976855], {
+                                balloonContent: "196066, Россия, Санкт-Петербург,<br/>пр. Маршала Блюхера"
+                            }, {
+                                iconImageHref: 'http://z-index.com.ua/Content/img/map-icon.png', // картинка иконки
+                                iconImageSize: [43, 42], // размеры картинки
+                                iconImageOffset: [-16, -36] // смещение картинки
+
+                            });
+
+                            //adding placemarks to our map
+                            map.geoObjects.add(myPlacemark1);
+
+                            var arr = [myPlacemark1];
+
+                            $(function(){
+                                $.each(arr,function(k,v){
+                                    var mark = arr[k];
+
+                                    mark.events.add('mouseenter', function (e) {
+                                        e.get('target').options.set('iconImageHref', 'http://z-index.com.ua/Content/img/map-hover.png');
+                                    });
+                                    mark.events.add('mouseleave', function (e) {
+                                        e.get('target').options.set('iconImageHref', 'http://z-index.com.ua/Content/img/map-icon.png');
+                                    });
+                                    mark.events.add('click', function (e) {
+                                        map.setCenter(mark.geometry.getCoordinates(), 15, map);
+                                    });
+                                });
+                            });
+
+                        };
+                    </script>
+                    <script src="http://api-maps.yandex.ru/2.0-stable/?lang=ru-RU&coordorder=longlat&load=package.full&wizard=constructor&onload=fid_1361787748897998812309"></script>
+                    <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (конец) -->
+                </section>
+            </div>
+            <a class="ico ico_type_close" href="#"></a>
+        </div>
+        <div class="popup__bg"></div>
+    </div>
+
+    <div class="popup" style="display:none;">
+        <div class="popup__data popup__data-doc">
+            <div id="popupdoc" class="popup-box">
+                <div class="popup-box__main popup-box__main_doc">
+                    <h2>Скачать проектную документацию</h2>
+                    <div class="realty__doc">
+                        <a class="b-link" href="#"><img src="img/pdf.png" alt=""></a>
+                        <a class="b-link b-link_text" href="#">Проектная декларация<span class="realty__list-comment">5 Мб</span></a>
+                    </div>
+                    <div class="realty__doc">
+                        <a class="b-link" href="#"><img src="img/doc.png" alt=""></a>
+                        <a class="b-link b-link_text" href="#">Изменение к проектной декларации<span class="realty__list-comment">2 Мб</span></a>
+                    </div>
+                    <div class="realty__doc">
+                        <a class="b-link" href="#"><img src="img/doc.png" alt=""></a>
+                        <a class="b-link b-link_text" href="#">Скачать изменение в проектную декларацию от 29.07.11<span class="realty__list-comment">2 Мб</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
